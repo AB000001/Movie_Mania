@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import axios from "axios"
 
 function App() {
 
@@ -83,7 +84,12 @@ function SearchPage() {
       const data = await response.json()
       console.log(data.results)
       if (data.results.length > 0)
-        setMovies(data.results);
+        {
+          setMovies(data.results);
+          await axios.post("http://127.0.0.1:3000/addtodb", {
+            searchitem:inputref.current.value
+        });
+        }
       else
         setnotfound(true)
     } catch (err) {
